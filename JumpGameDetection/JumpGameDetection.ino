@@ -58,7 +58,7 @@ void loop() {
     Serial.println(footDetected);
   }
 #endif
-  controllerData.dpadUpOn = footDetected;
+  controllerData.dpadUpOn = !footDetected;
   setControllerData(controllerData);
 #if NUMBER_OF_SENSORS == 2
   delay(60);
