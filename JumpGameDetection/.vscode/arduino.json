@@ -1,5 +1,5 @@
 {
     "board": "arduino:avr:uno",
     "sketch": "JumpGameDetection.ino",
-    "port": "COM3"
+    "port": "COM4"
 }
