@@ -49,7 +49,7 @@ void loop() {
   bool footDetected = Detector_1.FootDetected();
   delay(60);
 #if NUMBER_OF_SENSORS == 2
-  footDetected &= Detector_2.FootDetected();
+  footDetected |= Detector_2.FootDetected();
 #endif
   dataForController_t controllerData = getBlankDataForController();
 #if TESTING_MODE
