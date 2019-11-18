@@ -49,13 +49,12 @@ void loop() {
   bool footDetected = Detector_1.FootDetected();
   delay(60);
 #if NUMBER_OF_SENSORS == 2
-  footDetected |= Detector_2.FootDetected();
+  footDetected &= Detector_2.FootDetected();
 #endif
   dataForController_t controllerData = getBlankDataForController();
 #if TESTING_MODE
-  if(footDetected){
-    Serial.print("Foot Detected: ");
-    Serial.println(footDetected);
+  if(!footDetected){
+    Serial.println("Person in the air");
   }
 #endif
   controllerData.dpadUpOn = !footDetected;

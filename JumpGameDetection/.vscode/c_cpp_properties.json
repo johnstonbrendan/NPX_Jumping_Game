@@ -12,7 +12,9 @@
                 "C:/Program Files (x86)/Arduino",
                 "C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include",
                 "C:/Users/johns/Documents/Arduino/libraries/**",
-                "C:/Program Files (x86)/Arduino/libraries/**"
+                "C:/Program Files (x86)/Arduino/libraries/**",
+                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\**",
+                "C:\\Program Files (x86)\\Arduino\\tools\\**"
             ],
             "defines": [
                 "_DEBUG",
@@ -26,7 +28,8 @@
             "cppStandard": "c++17",
             "intelliSenseMode": "msvc-x64",
             "forcedInclude": [
-                "C://Program Files (x86)//Arduino//hardware//arduino//avr//cores//arduino//Arduino.h"
+                "C://Program Files (x86)//Arduino//hardware//arduino//avr//cores//arduino//Arduino.h",
+                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h"
             ]
         }
     ],
