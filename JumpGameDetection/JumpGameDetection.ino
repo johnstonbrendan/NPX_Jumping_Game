@@ -10,7 +10,7 @@
 #define NO_FOOT_DIST_2 100 //cm
 
 //below are definitions for testing
-#define TESTING_MODE 1 //0 for off 1 for on, turns on print statements
+#define TESTING_MODE 0 //0 for off 1 for on, turns on print statements
 #define NUMBER_OF_SENSORS 2 //only do 1 or 2
 
 FootDetector Detector_1 = FootDetector(TRIG_PIN_1,ECHO_PIN_1,FOOT_DIST_1,NO_FOOT_DIST_1);
@@ -25,6 +25,7 @@ void setup() {
 
 }
 
+bool send_key = false;
 void loop() {
   // put your main code here, to run repeatedly:
 #if TESTING_MODE
@@ -52,12 +53,16 @@ void loop() {
   footDetected |= Detector_2.FootDetected();
 #endif
   dataForController_t controllerData = getBlankDataForController();
-#if TESTING_MODE
-  if(!footDetected){
-    Serial.println("Person in the air");
+  if (footDetected){
+    send_key = true;
   }
+  else if(send_key){
+    send_key = false;
+#if TESTING_MODE
+    Serial.println("Send Key");
 #endif
-  controllerData.dpadUpOn = !footDetected;
+    controllerData.dpadUpOn = true;
+  }
   setControllerData(controllerData);
 #if NUMBER_OF_SENSORS == 2
   delay(60);
