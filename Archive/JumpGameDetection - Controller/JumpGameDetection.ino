@@ -1,4 +1,5 @@
 #include "FootDetector.h"
+#include "UnoJoy.h"
 #define TRIG_PIN_1 12
 #define TRIG_PIN_2 10
 #define ECHO_PIN_1 11
@@ -10,18 +11,16 @@
 
 //below are definitions for testing
 #define TESTING_MODE 0 //0 for off 1 for on, turns on print statements
-#define NUMBER_OF_SENSORS 1 //only do 1 or 2
+#define NUMBER_OF_SENSORS 2 //only do 1 or 2
 
 FootDetector Detector_1 = FootDetector(TRIG_PIN_1,ECHO_PIN_1,FOOT_DIST_1,NO_FOOT_DIST_1);
 FootDetector Detector_2 = FootDetector(TRIG_PIN_2,ECHO_PIN_2,FOOT_DIST_2,NO_FOOT_DIST_2);
-uint8_t buf[8] = {0};
 
 void setup() {
+  setupUnoJoy();
   #if TESTING_MODE
   Serial.begin(9600);
   #endif
-  Serial.begin(9600);
-  delay(200);
   // put your setup code here, to run once:
 
 }
@@ -49,10 +48,11 @@ void loop() {
   }
 #endif
   bool footDetected = Detector_1.FootDetected();
-//  delay(60);
+  delay(60);
 #if NUMBER_OF_SENSORS == 2
   footDetected |= Detector_2.FootDetected();
 #endif
+  dataForController_t controllerData = getBlankDataForController();
   if (footDetected){
     send_key = true;
   }
@@ -61,16 +61,10 @@ void loop() {
 #if TESTING_MODE
     Serial.println("Send Key");
 #endif
-  buf[2] = 44;
-  Serial.write(buf,8);
-  releaseKey();
+    controllerData.dpadUpOn = true;
   }
+  setControllerData(controllerData);
 #if NUMBER_OF_SENSORS == 2
-//  delay(60);
+  delay(60);
 #endif
-}
-
-void releaseKey(){
-  buf[2] = 0;
-  Serial.write(buf,8);
 }

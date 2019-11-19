@@ -1,0 +1,5 @@
+{
+    "board": "arduino:avr:uno",
+    "sketch": "JumpGameDetection.ino",
+    "port": "COM4"
+}
