@@ -3,8 +3,8 @@
 #define TRIG_PIN_2 10
 #define ECHO_PIN_1 11
 #define ECHO_PIN_2 9
-#define FOOT_DIST_1 30 //cm
-#define FOOT_DIST_2 30 //cm
+#define FOOT_DIST_1 45 //cm
+#define FOOT_DIST_2 45 //cm
 #define NO_FOOT_DIST_1 100 //cm
 #define NO_FOOT_DIST_2 100 //cm
 
@@ -26,7 +26,7 @@ void setup() {
 
 }
 
-bool send_key = false;
+int previous_jump = 0;
 void loop() {
   // put your main code here, to run repeatedly:
 #if TESTING_MODE
@@ -54,16 +54,18 @@ void loop() {
   footDetected |= Detector_2.FootDetected();
 #endif
   if (footDetected){
-    send_key = true;
+    previous_jump++;
   }
-  else if(send_key){
-    send_key = false;
+  else if(previous_jump > 3){
+  previous_jump = 0;
 #if TESTING_MODE
     Serial.println("Send Key");
 #endif
   buf[2] = 44;
   Serial.write(buf,8);
   releaseKey();
+//  Serial.println("Send Space");
+//  delay(60);
   }
 #if NUMBER_OF_SENSORS == 2
 //  delay(60);
